@@ -50,4 +50,4 @@ def process():
     response = {'NB': f"{grasinantys_sakiniai[predictionOnNB[0]]}"}
     return jsonify(response)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
