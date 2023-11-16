@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sakinio klasifikavimo API</title>
+    <title>LT sentence classification</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -10,14 +10,47 @@
   </head>
   <body>
     <div class="center_all">
+      <h1>Sentence classification in lithuanian language</h1>
+      <h4>
+        This website provides a possibility to classify a lithuanian sentence in
+        to the category of a <b>threatening sentence</b> or
+        <b>not threatening</b>. Models Multi Layer Perceptron and Naive Bayess
+        classify sentences with a higher than 80% over all accuracy.
+      </h4>
       <div class="form">
         <form id="input-form">
-          <label for="input-text">Įvestis</label>
+          <label for="input-text">Type a sentence in lithuanian</label>
           <textarea type="text" id="input-text" name="input_text"></textarea>
           <button type="submit">Patvirtinti</button>
         </form>
         <div class="response">
-          <p id="response"></p>
+          <span>Prediction:</span>
+          <p id="response1"></p>
+          <p id="response2"></p>
+        </div>
+      </div>
+      <div>
+        <p>Made by &copy; Aušrys Mikoliūnas</p>
+
+        <div class="contact">
+          <p>Contact me:</p>
+          <a href="mailto:ausrys.mikoliunas@gmail.com">
+            ausrys.mikoliunas@gmail.com
+          </a>
+        </div>
+
+        <div>
+          <p>GitHub:</p>
+          <a href="https://github.com/ausrys/magistras">
+            https://github.com/ausrys
+          </a>
+        </div>
+        <div>
+          <p>Linkedin:</p>
+          <a
+            href="https://www.linkedin.com/in/au%C5%A1rys-mikoli%C5%ABnas-520b93214/"
+            >My Linkedin
+          </a>
         </div>
       </div>
     </div>
@@ -42,10 +75,19 @@
           }
 
           const responseData = await response.json();
-          const responseText = JSON.stringify(responseData);
-          console.log(responseData);
-          const responseElement = document.querySelector("#response");
-          responseElement.innerText = responseText;
+          const responseElement1 = document.querySelector("#response1");
+          const responseElement2 = document.querySelector("#response2");
+          // Remove existing classes
+          responseElement1.classList.remove("threat", "nonthreat");
+          responseElement2.classList.remove("threat", "nonthreat");
+          responseElement1.classList.add(
+            responseData.MLP == "Negrasinantis" ? "nonthreat" : "threat"
+          );
+          responseElement2.classList.add(
+            responseData.NB == "Negrasinantis" ? "nonthreat" : "threat"
+          );
+          responseElement1.innerText = `MLP: ${responseData.MLP}`;
+          responseElement2.innerText = `NB: ${responseData.NB}`;
         } catch (error) {
           console.error("Error fetching or parsing data:", error);
         }

@@ -12,9 +12,9 @@ stopwordsall = pd.read_csv('stopwords.csv')
 stopwords = stopwordsall['stop_words'].tolist()
 stop_words_set = set(stopwords)
 nb = pickle.load(open('naivebmodel.pkl', 'rb'))
-# mlp = pickle.load(open('mlpmodel.pkl', 'rb'))
+mlp = pickle.load(open('mlpmodel.pkl', 'rb'))
 vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
-# vectorizerI = pickle.load(open('vetorizerI.pkl', 'rb'))
+vectorizerI = pickle.load(open('vetorizerI.pkl', 'rb'))
 def sentence_corection(sentence):
     # Sentence is divided in tokens and they are processed to that the model would understand it better
     document = re.sub(r'\W', ' ', str(sentence))
@@ -45,9 +45,9 @@ def index():
 def process():
     input_text = request.get_json()
     correct_sentence = sentence_corection(input_text['data'])  # Example processing, 
-    # predictionOnMLP = mlp.predict(vectorizerI.transform([correct_sentence]))
+    predictionOnMLP = mlp.predict(vectorizerI.transform([correct_sentence]))
     predictionOnNB = nb.predict(vectorizer.transform([correct_sentence]))
-    response = {'NB': f"{grasinantys_sakiniai[predictionOnNB[0]]}"}
+    response = {'NB': f"{grasinantys_sakiniai[predictionOnNB[0]]}", 'MLP': f"{grasinantys_sakiniai[predictionOnMLP[0]]}"}
     return jsonify(response)
 if __name__ == '__main__':
     app.run()

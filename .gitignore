@@ -20,9 +20,10 @@ modelTransformer
 naive_bayess.pkl
 package-lock.json
 package.json
-pradinisi.csv
 randomF.pkl
 svm.pkl
 text.txt
 transformer.pkl
 transformers.ipynb
+BERT.py
+tokenizer.ipynb
