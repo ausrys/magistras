@@ -14,8 +14,9 @@
       <h4>
         This website provides a possibility to classify a lithuanian sentence in
         to the category of a <b>threatening sentence</b> or
-        <b>not threatening</b>. Models Multi Layer Perceptron and Naive Bayess
-        classify sentences with a higher than 80% over all accuracy.
+        <b>not threatening</b>. Model Naive Bayess classify sentences with a
+        higher than 80% over all accuracy. How ever the model is not perfect and
+        still makes mistakes.
       </h4>
       <div class="form">
         <form id="input-form">
@@ -26,7 +27,6 @@
         <div class="response">
           <span>Prediction:</span>
           <p id="response1"></p>
-          <p id="response2"></p>
         </div>
       </div>
       <div>
@@ -76,18 +76,12 @@
 
           const responseData = await response.json();
           const responseElement1 = document.querySelector("#response1");
-          const responseElement2 = document.querySelector("#response2");
           // Remove existing classes
           responseElement1.classList.remove("threat", "nonthreat");
-          responseElement2.classList.remove("threat", "nonthreat");
           responseElement1.classList.add(
-            responseData.MLP == "Negrasinantis" ? "nonthreat" : "threat"
-          );
-          responseElement2.classList.add(
             responseData.NB == "Negrasinantis" ? "nonthreat" : "threat"
           );
-          responseElement1.innerText = `MLP: ${responseData.MLP}`;
-          responseElement2.innerText = `NB: ${responseData.NB}`;
+          responseElement1.innerText = `Naive Bayess: ${responseData.NB}`;
         } catch (error) {
           console.error("Error fetching or parsing data:", error);
         }
